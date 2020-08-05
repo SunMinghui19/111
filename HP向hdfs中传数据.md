@@ -1,6 +1,6 @@
 具体工作流程
+![image](https://github.com/SunMinghui19/k8s-hadoop-hdfs-/blob/master/image/hdfs-princple.png)
 ```
-1[image](https://github.com/SunMinghui19/k8s-hadoop-hdfs-/blob/master/image/hdfs-princple.png)
 * 1、hdfs客户端向namenode发送上传请求
 * 2、namenode收到请求后，检查目录信息
 * 3、namenode检查过后，告诉客户端可以上传
