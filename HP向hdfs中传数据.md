@@ -129,5 +129,24 @@ public class Chapter3{
 * java API
 * shell命令
 
+### copyFromLocalFile
+```
+public void copyFromLocalFile(Path src,
+                     Path dst)
+                       throws IOException
+
+The src file is on the local disk. Add it to FS at the given dst name and the source is kept intact afterwards
+
+Parameters:
+    src - path
+    dst - path
+Throws:
+    IOException
+```
 
 
+进入namenode
+执行 hdfs dfsadmin -report 。会显示可用的datanode
+
+
+优质博文：https://blog.csdn.net/HeatDeath/article/details/79012340?utm_source=blogkpcl11
