@@ -56,3 +56,78 @@ FsImage Editlog（略，未做笔记）
 
 # HDFS存储原理
 默认冗余因子为3
+## 数据写入
+第一块来了之后要放3份，第一副本放在上传文件的数据节点。（如果是集群外部发出的请求，会随机挑一个磁盘不太慢，内存不满的节点）
+第二副本放在不同机架上
+第三个副本放在本机架的其他节点
+## 数据读取
+* HDFS提供了一个API可以确定一个数据节点所属的机架ID，客户端可以调用API获取自己所属的机架ID
+* 当客户端读取数据时，从名称节点获得数据块不同副本的存放位置列表，列表中包含了副本所在的数据节点，可以调用API来确定客户端和这些数据节点所属的机架ID，当发现某个数据块副本对应的机架ID和客户端对应的机架ID相同时就优先选择该副本读取数据，如果没有发现，就随机选择一个副本读取数据
+
+## 数据的错误和恢复
+通过校验码进行验证
+
+# HDFS的读写过程
+## HDFS 读过程代码
+读取数据的代码
+```
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.fs.FSDataInputStream;
+public class Chapter3{
+    try{
+        Configuration conf = new Configuration();
+        FileSystem fs = FileSystem.get(conf);
+        Path filename = new Path("hdfs://localhost:9000/user/hadoop/test.txt")
+        FSDataInputStream is = fs.open(filename);
+        BufferedReader d = new BufferedReader(new InputStreamReader(is));
+        String content = dreadLine();//读取文件一行
+        System.out.println(content);
+        d.close();//关闭文件
+        fs.close();//关闭hdfs
+        } cath (Exception e){
+            e.printStackTrace();
+        }
+}
+```
+## HDFS读的过程
+![image](hadoop-consist)]
+
+
+## HDFS写数据过程
+![image][]
+
+## HDFS写数据代码
+```
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.FSDataOutputStream;
+import org.apache.hadoop.fs.Path;
+public class Chapter3{
+    try{
+        Configuration conf = new Configuration();
+        FileSystem fs = FileSystem.get(conf);
+        byte[] buff = "Hello world".getBytes();//要写入的内容
+        String filename = "hdfs://localhost:9000/user/hadoop/test.txt" //要写入的文件名
+        FSDataOuptStream os = fs.create(new Path(filename));
+        os.write(buff,0,buff,length);
+        System.out.println("Create:"+filename);
+        d.close();//关闭文件
+        fs.close();//关闭hdfs
+        } cath (Exception e){
+            e.printStackTrace();
+        }
+}
+
+```
+## HDFS的基本编程方法
+
+常用的两种
+* java API
+* shell命令
+
+
+
