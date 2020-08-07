@@ -129,24 +129,24 @@ public class Chapter3{
 * java API
 * shell命令
 
-### copyFromLocalFile
-```
-public void copyFromLocalFile(Path src,
-                     Path dst)
-                       throws IOException
 
-The src file is on the local disk. Add it to FS at the given dst name and the source is kept intact afterwards
+# 在云主机上测试
 
-Parameters:
-    src - path
-    dst - path
-Throws:
-    IOException
-```
+## 1
+1、在master节点上执行如下命令
+kubectl get pod -n hadoop-1 -o wide 
+通过这条命令我们可以获得namenode容器所在的node节点
+
+2、连接到那么namenode所在的节点
+使用docker ps 查看namenode容器的ID
+使用 docker exec -it [容器镜像ID] /bin/bash 进入namenode
 
 
-进入namenode
-执行 hdfs dfsadmin -report 。会显示可用的datanode
+## 添加datanode到hdfs
 
 
-优质博文：https://blog.csdn.net/HeatDeath/article/details/79012340?utm_source=blogkpcl11
+
+不管怎样：https://www.cnblogs.com/ccskun/p/7820977.html在这个网址下的操作我都可以正常的执行
+
+9000端口没有被监听：https://www.cnblogs.com/vanwoos/p/7839123.html
+
