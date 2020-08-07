@@ -150,3 +150,6 @@ kubectl get pod -n hadoop-1 -o wide
 
 9000端口没有被监听：https://www.cnblogs.com/vanwoos/p/7839123.html
 
+hdfs dfs -ls /user/root/  与 hdfs dfs -ls hdfs://localhost:8020/ 效果相同
+
+生成指定大小的文件：https://blog.csdn.net/keye_2014/article/details/40920065
