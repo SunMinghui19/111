@@ -153,3 +153,6 @@ kubectl get pod -n hadoop-1 -o wide
 hdfs dfs -ls /user/root/  与 hdfs dfs -ls hdfs://localhost:8020/ 效果相同
 
 生成指定大小的文件：https://blog.csdn.net/keye_2014/article/details/40920065
+生成指定大小的文件，并且数据随机：https://blog.csdn.net/hknaruto/article/details/106809808
+
+对于复制文件到hdfs java api 具有很高的参考价值https://www.cnblogs.com/growth-hong/p/6396332.html
