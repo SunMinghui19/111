@@ -94,11 +94,12 @@ public class Chapter3{
 }
 ```
 ## HDFS读的过程
-![image](hadoop-consist)]
+![image](https://github.com/SunMinghui19/k8s-hadoop-hdfs-/blob/master/image/hdfs-open.JPG)
 
 
 ## HDFS写数据过程
-![image][]
+![image](https://github.com/SunMinghui19/k8s-hadoop-hdfs-/blob/master/image/hdfs-write.JPG)
+
 
 ## HDFS写数据代码
 ```
