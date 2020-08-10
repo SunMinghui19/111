@@ -20,13 +20,14 @@ HDFS的设计目标就是海量数据批处理的需求
 ## HDFS中的一些相关概念
 ### 块
 是HDFS中最核心的概念之一  
-为了分摊磁盘读写开销也就是在大量数据间分摊磁盘寻址的开销  
+为了分摊磁盘读写开销也就是在大量数据间分摊磁盘寻址的开销,即最小化寻址开销  
 其中块的大小为64M，在hadoop2.0后为128M
 寻找数据的话要经过三级寻址  
 ```
 找到元数据目录->找到数据节点->从数据节点中取数据
 ```
-（这个地方最好解释解释好在哪里）
+这个块也不能无限的大，MapReduce中的map任务通常一次只处理一个块中的数据。如果块太大，那么可能会导致任务数太少（少于集群中的节点数量），作业的运行速度就会比较慢。
+
 ### namenode和datanode
 集群硬件配置：  
  在hdfs1.0中1个namenode 和多个datanod  
@@ -71,7 +72,7 @@ HDFS的设计目标就是海量数据批处理的需求
 通过校验码进行验证，此处未过多了解
 
 # HDFS的读写过程
-## HDFS 读过程代码
+## HDFS 读过程java代码
 读取数据的代码
 ```
 import java.io.BufferedReader;
@@ -104,7 +105,7 @@ public class Chapter3{
 ![image](https://github.com/SunMinghui19/k8s-hadoop-hdfs-/blob/master/image/hdfs-write.JPG)
 
 
-## HDFS写数据代码
+## HDFS写数据java代码
 ```
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -128,10 +129,79 @@ public class Chapter3{
 
 ```
 ## HDFS的基本编程方法
-
+### shell命令
+（1）查看帮助
+```
+        hdfs dfs -help 
+```
+ 
+（2）查看当前目录信息
+```
+    hdfs dfs -ls /
+```
+（3）上传文件
+```
+    hdfs dfs -put /本地路径 /hdfs路径
+```
+（4）剪切文件
+```
+    hdfs dfs -moveFromLocal a.txt /aa.txt
+```
+（5）下载文件到本地
+```
+    hdfs dfs -get /hdfs路径 /本地路径
+```
+（6）合并下载
+```
+    hdfs dfs -getmerge /hdfs路径文件夹 /合并后的文件
+```
+（7）创建文件夹
+```
+    hdfs dfs -mkdir /hello
+```
+（8）创建多级文件夹
+```
+    hdfs dfs -mkdir -p /hello/world
+```
+（9）移动hdfs文件
+```
+    hdfs dfs -mv /hdfs路径 /hdfs路径
+```
+（10）复制hdfs文件
+```
+    hdfs dfs -cp /hdfs路径 /hdfs路径
+```
+（11）删除hdfs文件
+```
+    hdfs dfs -rm /aa.txt
+```
+（12）删除hdfs文件夹
+```
+    hdfs dfs -rm -r /hello
+```
+（13）查看hdfs中的文件
+```
+    hdfs dfs -cat /文件
+    hdfs dfs -tail -f /文件
+```
+（14）查看文件夹中有多少个文件
+```
+    hdfs dfs -count /文件夹
+```
+（15）查看hdfs的总空间
+```
+    hdfs dfs -df /
+    hdfs dfs -df -h /
+```
+（16）修改副本数 
+```
+    hdfs dfs -setrep 1 /a.txt
+```
 常用的两种
-* java API
-* shell命令
+### java API
+
+
+
 
 
 # 在云主机上测试
@@ -146,10 +216,34 @@ kubectl get pod -n hadoop-1 -o wide
 使用 docker exec -it [容器镜像ID] /bin/bash 进入namenode
 
 
-## 添加datanode到hdfs
 
 
 
+# K8s搭建hadoop平台
+具体可参考我的k8s搭建hadoop平台
+现在先参考：https://www.cnblogs.com/00986014w/p/9732796.html?tdsourcetag=s_pctim_aiomsg
+# 使用python的matplotlib.pyplot作图
+
+## java中计算程序运行时间的方法
+```
+
+long startTime = System.currentTimeMillis();    //获取开始时间
+
+doSomething();    //测试的代码段
+
+long endTime = System.currentTimeMillis();    //获取结束时间
+
+System.out.println("程序运行时间：" + (endTime - startTime) + "ms");    //输出程序运行时间
+```
+
+## linux中生成指定大小随机内容文件
+```
+dd if=/dev/urandom of=data.bin bs=100K count=1
+```
+
+# hdfs dfsadmin -report 查看集群节点
+
+# 参考
 不管怎样：https://www.cnblogs.com/ccskun/p/7820977.html在这个网址下的操作我都可以正常的执行
 
 9000端口没有被监听：https://www.cnblogs.com/vanwoos/p/7839123.html
