@@ -253,14 +253,35 @@ dd if=/dev/urandom of=data.bin bs=100K count=1
 
 # hdfs dfsadmin -report 查看集群节点
 
+
 # 参考
-不管怎样：https://www.cnblogs.com/ccskun/p/7820977.html在这个网址下的操作我都可以正常的执行
 
-9000端口没有被监听：https://www.cnblogs.com/vanwoos/p/7839123.html
 
-hdfs dfs -ls /user/root/  与 hdfs dfs -ls hdfs://localhost:8020/ 效果相同
-
-生成指定大小的文件：https://blog.csdn.net/keye_2014/article/details/40920065
 生成指定大小的文件，并且数据随机：https://blog.csdn.net/hknaruto/article/details/106809808
+## hadoop
+简单之美（深度剖析hdfs的读写过程-有空可以好好读）：http://shiyanjun.cn/archives/942.html
+林子雨hdfs实验：http://dblab.xmu.edu.cn/blog/290-2/
+知乎上较好的文章：https://zhuanlan.zhihu.com/p/75896909
+                https://www.cnblogs.com/kocdaniel/p/11589382.html
+## hdfs shell
+shell命令比较全：https://www.cnblogs.com/areyouready/p/9783687.html
+hadoop的机架感知：https://www.cnblogs.com/bigdata-stone/p/9311851.html
+系统的shell指令：https://www.cnblogs.com/hjwq/p/7873641.html
+## hadoop java API（k8s）
+查看自己的hdfs监听的端口（与常用的9000不同，具体靠看配置）：https://www.cnblogs.com/vanwoos/p/7839123.html
+简单的测试hdfs功能：https://www.cnblogs.com/ccskun/p/7820977.html
+官网函数参考：http://hadoop.apache.org/docs/r2.7.1/api/index-all.html
+我的java程序的模板来源：https://www.cnblogs.com/growth-hong/p/6396332.html
+java向日志文件中写日志：https://blog.csdn.net/douxingpeng1/article/details/83050716
+可以参考的javaAPI程序：https://blog.csdn.net/vtopqx/article/details/8608878    
+                     https://blog.csdn.net/daxiang12092205/article/details/52717470/
+查看hdfs存放的副本位置：https://blog.csdn.net/weixin_41255682/article/details/80312478
+## python 处理数据
+python中提取日志文件保存到excel：https://blog.csdn.net/zhelijun/article/details/102294138?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~first_rank_v2~rank_v25-1-102294138.nonecase
+excel中将文本转为数字：https://www.office68.com/excel/batch-convert-text-into-digital.html
+## python plot作图的参考
+总体讲解：https://www.cnblogs.com/zhanghongfeng/p/8546693.html
+添加线条标注：https://www.cnblogs.com/qccc/p/12795205.html
+讲的很明白的线条标注：https://zhuanlan.zhihu.com/p/33722621
+线条风格：https://blog.csdn.net/Treasure99/article/details/106044114/
 
-对于复制文件到hdfs java api 具有很高的参考价值https://www.cnblogs.com/growth-hong/p/6396332.html
