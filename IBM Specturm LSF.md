@@ -47,8 +47,8 @@ IBM LSF 将多个集群连接在一起，一个集群往往是企业中的一个
   最后，mbatchd 给提交主机反馈作业输出信息、作业错误、提示信息、作业信息。
   
 ## Kubernetes连接器
-IBM Spectrum LSF对K8s的连接器使用IBM Spectrum LSF 的调度技术并且集成进了K8s中去。
-！[image](https://github.com/SunMinghui19/k8s-hadoop-hdfs-/blob/master/image/LSF/LSF-k8s.JPG)
+IBM Spectrum LSF对K8s的连接器使用IBM Spectrum LSF 的调度技术并且集成进了K8s中去。  
+！[image](https://github.com/SunMinghui19/k8s-hadoop-hdfs-/blob/master/image/LSF/LSF-k8s.JPG)  
 1、LSF调度组件被打包进了容器中，并提供了helm表部署到K8s的环境中
 2、用户通过kubectl提交作业到K8s的API server，如果要想使用LSF调度程序，就必须要修改SchedulerName字段，否则的话Pod将使用默认的Scheduler进行调度。
 3、为了了解Pod和节点的状态，LSF 调度程序使用了一个驱动程序，该驱动程序侦听Kubernetes API服务器并将Pod请求转换为LSF 调度程序中的作业。
