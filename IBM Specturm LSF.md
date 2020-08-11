@@ -1,6 +1,6 @@
 # IBM Specturm LSF
 主要作用是进行硬件计算资源的统一调度和管理(
-IBM Spectrum LSF产品是一套业内领先的系统管理和部署集成软件，拥有60%世界500强的用户，用户行业遍及各个行业，市场占有率在全球和国内均为第一。(18年的时候是这样，现在不确定)
+IBM Spectrum LSF产品是一套业内领先的系统管理和部署集成软件，在2018年拥有60%世界500强的用户，用户行业遍及各个行业，市场占有率在全球和国内均为第一。
 
 高性能计算的本质，就是在最大程度上提高软硬件资源的利用率
 就是通过LSF驻留程序将硬件资源的运行情况收集起来，在平台层面实现统一监控和管理。从用户的角度来看，他们看到的不再是大批的服务器，而是“一台”机器，管理难度和相应的工作量得以大大降低。
@@ -45,6 +45,20 @@ IBM LSF 将多个集群连接在一起，一个集群往往是企业中的一个
   当一个作业完成时，如果这个作业没有任何问题，它处于一个完成状态。如果有错误作业无法完成，这份作业处于退出状态。sbatchd 传达作业信息，包括错误提示和给 mbatchd 的输出信息。
 ### 6反馈
   最后，mbatchd 给提交主机反馈作业输出信息、作业错误、提示信息、作业信息。
+  
+## Kubernetes连接器
+IBM Spectrum LSF对K8s的连接器使用IBM Spectrum LSF 的调度技术并且集成进了K8s中去。
+！[image](lsf-k8s)
+1、LSF调度组件
+1、The LSF scheduler components are packaged into containers and a Helm chart is provided to deploy into the Kubernetes environment.
+2、Users submits workload into K8S API via kubectl. To get the LSF scheduler to be aware of the pod the "schedulerName" field must be set, otherwise the pod will be scheduled by the default scheduler. Scheduler directives can be specified using annotations in the pod.
+3、In order to be aware of the status of pods and nodes, the LSF scheduler uses a driver that listens to Kubernetes API server and translates pod requests into jobs in the LSF scheduler.
+4、Once the LSF scheduler makes a policy decision on where to schedule the pod, the driver will bind the pod to specific node.
+5、The Kubelet will execute and manages pod lifecycle on target nodes in the normal fashion.
+
+The LSF scheduler also supports jobs submitted from the native bsub command, which are mapped to K8S pods and executed by Kubelet as well. In this way it is consistent.
+
+具体的配置方案：https://www.ibm.com/support/knowledgecenter/ja/SSWRJV_10.1.0/kubernetes_connector/install_about.html
 
 # 三、任务分解
 
@@ -89,5 +103,10 @@ LSF Resource Connector 是 LSF 在 2016 年 7 月发布的最新版本 10.1 里�
 spark和IBM LSF 深度集成与实战 https://developer.ibm.com/zh/articles/ba-cn-spark-ibm-lsf-integration/
 IBM Developer https://developer.ibm.com/zh/
 IBM Spectrum LSF 的混合云解决方案：https://developer.ibm.com/zh/articles/cl-lo-ibm-spectrum-lsf-hybrid-cloud-solution/
+IBM LSF 官网 https://community.ibm.com/community/user/legacy
+
+
+LSF与Kubernetes的连接：https://www.ibm.com/support/knowledgecenter/ja/SSWRJV_10.1.0/lsf_welcome/lsf_kc_kubernetes_connector.html
+LSF安装k8s：https://www.ibm.com/support/knowledgecenter/ja/SSWRJV_10.1.0/kubernetes_connector/install_about.html
 
 ```
