@@ -57,12 +57,12 @@ HDFS的设计目标就是海量数据批处理的需求
 ## HDFS存储
 默认冗余因子为3，即备份3份
 ### 数据写入
-![image](https://github.com/SunMinghui19/k8s-hadoop-hdfs-/blob/master/image/raplicas-rack.JPG)
+![image](https://github.com/SunMinghui19/k8s-hadoop-hdfs-/blob/master/image/raplicas-rack.JPG)  
 第一块来了之后要放3份，第一副本放在上传文件的数据节点。（如果是集群外部发出的请求，会随机挑一个磁盘不太慢，内存不满的节点）
 第二副本放在不同机架上
 第三个副本放在本机架的其他节点
 ```
-因为写入datanode的策略，是否有调度的必要性。测试是否是一个node就是一个机架
+因为hdfs写入datanode的策略。在k8s上布了10个datanode，去测试它的调度策略是否成立。
 ```
 ### 数据读取
 * HDFS提供了一个API可以确定一个数据节点所属的机架ID，客户端可以调用API获取自己所属的机架ID
@@ -205,6 +205,16 @@ public class Chapter3{
 
 
 # 在云主机上测试
+```
+1、使用dd命令创建了大小为64M,128M,256M的随机字符文件，并保存到hadoop的节点中去
+2、编写JAVA程序，上传指定大小的文件。将上传时间保存到日志文件中
+3、编写shell脚本，先执行java的上传命令，然后等待10s，再删除上传了的文件。将这个过程重复20次
+4、测试了两种极端条件下写入datanode并创建指定副本的时间。即3个datanode都在一个节点上跟3个datanode分布在不同节点上
+5、将测试好的数据保存到windows上，使用python将其制作为csv数据集
+6、使用python中的plt组件，将对比图显示出来。
+```
+
+
 
 ## 1
 1、在master节点上执行如下命令
