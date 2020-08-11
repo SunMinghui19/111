@@ -48,11 +48,11 @@ IBM LSF 将多个集群连接在一起，一个集群往往是企业中的一个
 ## Kubernetes连接器
 IBM Spectrum LSF对K8s的连接器使用IBM Spectrum LSF 的调度技术并且集成进了K8s中去。  
 ![image](https://github.com/SunMinghui19/k8s-hadoop-hdfs-/blob/master/image/LSF/LSF-k8s.JPG)  
-1、LSF调度组件被打包进了容器中，并提供了helm表部署到K8s的环境中
-2、用户通过kubectl提交作业到K8s的API server，如果要想使用LSF调度程序，就必须要修改SchedulerName字段，否则的话Pod将使用默认的Scheduler进行调度。
-3、为了了解Pod和节点的状态，LSF 调度程序使用了一个驱动程序，该驱动程序侦听Kubernetes API服务器并将Pod请求转换为LSF 调度程序中的作业。
-4、一旦LSF 调度程序决定了在何处调度Pod，驱动程序便会将Pod绑定到特定节点。
-5、Kubelet将以正常方式在目标节点上执行和管理Pod生命周期。
+1、LSF调度组件被打包进了容器中，并提供了helm表部署到K8s的环境中  
+2、用户通过kubectl提交作业到K8s的API server，如果要想使用LSF调度程序，就必须要修改SchedulerName字段，否则的话Pod将使用默认的Scheduler进行调度。  
+3、为了了解Pod和节点的状态，LSF 调度程序使用了一个驱动程序，该驱动程序侦听Kubernetes API服务器并将Pod请求转换为LSF 调度程序中的作业。  
+4、一旦LSF 调度程序决定了在何处调度Pod，驱动程序便会将Pod绑定到特定节点。  
+5、Kubelet将以正常方式在目标节点上执行和管理Pod生命周期。  
 
 ### Kubernetes作业不能使用以下LSF 功能：
 
@@ -71,10 +71,10 @@ IBM Spectrum LSF对K8s的连接器使用IBM Spectrum LSF 的调度技术并且�
 # 三、任务分解
 
 # 四、资源适配
-IBM Spectrum LSF 宣称其管理的集群规模目前已经能够支持多达六千个计算节点。从广义上来讲，LSF 管理的集群就相当于一个小型的企业内部私有云。但是，企业拥有的计算资源毕竟有限，当企业在研发或者业务高峰时期，几千个的计算节点也有可能无法满足大量的用户作业需求。公有云概念的兴起，使得 LSF 的企业用户自然而然的联想，是否可以从各种公有云平台中临时租用虚拟机，作为计算节点加入到 LSF 集群，来满足企业的高峰作业需求。LSF Resource Connector 正是为了满足这一特性需求，设计并实现的一个混合云计算解决方案。
+  IBM Spectrum LSF 宣称其管理的集群规模目前已经能够支持多达六千个计算节点。从广义上来讲，LSF 管理的集群就相当于一个小型的企业内部私有云。但是，企业拥有的计算资源毕竟有限，当企业在研发或者业务高峰时期，几千个的计算节点也有可能无法满足大量的用户作业需求。公有云概念的兴起，使得 LSF 的企业用户自然而然的联想，是否可以从各种公有云平台中临时租用虚拟机，作为计算节点加入到 LSF 集群，来满足企业的高峰作业需求。LSF Resource Connector 正是为了满足这一特性需求，设计并实现的一个混合云计算解决方案。
 ##  Resource Connector 架构
-![image](https://github.com/SunMinghui19/k8s-hadoop-hdfs-/blob/master/image/LSF/RC-structure.JPG)
-LSF Resource Connector 是 LSF 在 2016 年 7 月发布的最新版本 10.1 里的的一个新特性，该特性使得 LSF 能够根据集群的作业负载情况，从各种外部计算资源管理系统或者公有云平台借用计算资源（虚拟机或者物理机），将其加入 LSF 集群，然后 LSF Master 就可以把作业调度到借用的资源上。
+![image](https://github.com/SunMinghui19/k8s-hadoop-hdfs-/blob/master/image/LSF/RC-structure.JPG)  
+  LSF Resource Connector 是 LSF 在 2016 年 7 月发布的最新版本 10.1 里的的一个新特性，该特性使得 LSF 能够根据集群的作业负载情况，从各种外部计算资源管理系统或者公有云平台借用计算资源（虚拟机或者物理机），将其加入 LSF 集群，然后 LSF Master 就可以把作业调度到借用的资源上。
 
 ## LSF 如何从 Resource Provider 借用机器
 ![image](https://github.com/SunMinghui19/k8s-hadoop-hdfs-/blob/master/image/LSF/RC-unfit.JPG)
