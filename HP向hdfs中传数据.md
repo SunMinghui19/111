@@ -259,6 +259,7 @@ dd if=/dev/urandom of=data.bin bs=100K count=1
 
 生成指定大小的文件，并且数据随机：https://blog.csdn.net/hknaruto/article/details/106809808  
 ## hadoop
+简单之美hadoop的上层引用：https://blog.csdn.net/HeatDeath/article/details/79012340?utm_source=blogkpcl11  
 简单之美（深度剖析hdfs的读写过程-有空可以好好读）：http://shiyanjun.cn/archives/942.html  
 林子雨hdfs实验：http://dblab.xmu.edu.cn/blog/290-2/  
 知乎上较好的文章：https://zhuanlan.zhihu.com/p/75896909  
