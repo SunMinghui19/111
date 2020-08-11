@@ -33,23 +33,23 @@ IBM LSF 将多个集群连接在一起，一个集群往往是企业中的一个
 * 绿色节能调度
 ## 处理流程
 ![image](https://github.com/SunMinghui19/k8s-hadoop-hdfs-/blob/master/image/LSF/LSF-del.JPG)
-### 1提交一份作业
+* 1提交一份作业
   从 LSF 客户端，或者是一个运行 bsub 命令的服务器上提交一份作业，当提交这份作业时，如果不指定哪个队列，这份作业就会被提交到系统默认的队列中，作业在队列中等待安排，这些作业处于等待状态。
-### 2调度作业
+* 2调度作业
   后台的主进程 mbatchd 将处理队列中的作业，在一个预定的时间间隔里将这些作业按设定的计划，传递给主调度进程 mbschd。主调度进程 mbschd 评估这份工作时，根据作业的优先权制定调度决策、调度机制和可利用资源。主调度进程选择最佳的主机，在哪里作业可以运行，并将它的决策返回给后台主进程 mbatchd。主负载信息管理进程（LIM：Load Information Manager）收集资源信息，主 LIM 与 mbatchd 主进程交流这些信息，反过来 mbatchd 主进程使用之前交流信息支持调度决定。
-### 3分配作业
+* 3分配作业
   mbatchd 主进程一收到 mbschd 发过来的决定，立即分配作业到主机。
-### 4运行作业
+* 4运行作业
   从属批处理进程（sbatchd），从 mbatchd 主进程接到要求，为这份作业创建一个子 sbatchd 和一个执行环境，通过使用一个远程执行服务器开始这个作业。
-### 5返回输出
+* 5返回输出
   当一个作业完成时，如果这个作业没有任何问题，它处于一个完成状态。如果有错误作业无法完成，这份作业处于退出状态。sbatchd 传达作业信息，包括错误提示和给 mbatchd 的输出信息。
-### 6反馈
+* 6反馈
   最后，mbatchd 给提交主机反馈作业输出信息、作业错误、提示信息、作业信息。
   
 ## Kubernetes连接器
 IBM Spectrum LSF对K8s的连接器使用IBM Spectrum LSF 的调度技术并且集成进了K8s中去。
 ！[image](lsf-k8s)
-1、LSF调度组件
+1、LSF调度组件被打包进了容器中，并提供了helm表部署到K8s的环境中
 1、The LSF scheduler components are packaged into containers and a Helm chart is provided to deploy into the Kubernetes environment.
 2、Users submits workload into K8S API via kubectl. To get the LSF scheduler to be aware of the pod the "schedulerName" field must be set, otherwise the pod will be scheduled by the default scheduler. Scheduler directives can be specified using annotations in the pod.
 3、In order to be aware of the status of pods and nodes, the LSF scheduler uses a driver that listens to Kubernetes API server and translates pod requests into jobs in the LSF scheduler.
