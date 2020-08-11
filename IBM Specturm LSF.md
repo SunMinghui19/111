@@ -48,15 +48,24 @@ IBM LSF 将多个集群连接在一起，一个集群往往是企业中的一个
   
 ## Kubernetes连接器
 IBM Spectrum LSF对K8s的连接器使用IBM Spectrum LSF 的调度技术并且集成进了K8s中去。
-！[image](lsf-k8s)
+！[image](https://github.com/SunMinghui19/k8s-hadoop-hdfs-/blob/master/image/LSF/LSF-k8s.JPG)
 1、LSF调度组件被打包进了容器中，并提供了helm表部署到K8s的环境中
-1、The LSF scheduler components are packaged into containers and a Helm chart is provided to deploy into the Kubernetes environment.
-2、Users submits workload into K8S API via kubectl. To get the LSF scheduler to be aware of the pod the "schedulerName" field must be set, otherwise the pod will be scheduled by the default scheduler. Scheduler directives can be specified using annotations in the pod.
-3、In order to be aware of the status of pods and nodes, the LSF scheduler uses a driver that listens to Kubernetes API server and translates pod requests into jobs in the LSF scheduler.
-4、Once the LSF scheduler makes a policy decision on where to schedule the pod, the driver will bind the pod to specific node.
-5、The Kubelet will execute and manages pod lifecycle on target nodes in the normal fashion.
+2、用户通过kubectl提交作业到K8s的API server，如果要想使用LSF调度程序，就必须要修改SchedulerName字段，否则的话Pod将使用默认的Scheduler进行调度。
+3、为了了解Pod和节点的状态，LSF 调度程序使用了一个驱动程序，该驱动程序侦听Kubernetes API服务器并将Pod请求转换为LSF 调度程序中的作业。
+4、一旦LSF 调度程序决定了在何处调度Pod，驱动程序便会将Pod绑定到特定节点。
+5、Kubelet将以正常方式在目标节点上执行和管理Pod生命周期。
 
-The LSF scheduler also supports jobs submitted from the native bsub command, which are mapped to K8S pods and executed by Kubelet as well. In this way it is consistent.
+### Kubernetes作业不能使用以下LSF 功能：
+
+* bstop命令
+* 支持有限的Bkill命令Bkill可以终止Pod，但不向在Pod内部运行的作业发送任意UNIX信号。
+* LSF作业调整大小
+* LSF数据管理器
+* LSF许可证调度程序
+* LSF多集群功能
+* LSF 资源连接器
+* CPU和NUMA节点关联
+
 
 具体的配置方案：https://www.ibm.com/support/knowledgecenter/ja/SSWRJV_10.1.0/kubernetes_connector/install_about.html
 
